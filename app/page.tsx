@@ -25,7 +25,10 @@ export default function Home() {
     {name:'Gonja - Плющит', src:`/alisa/1.mp3`},
     {name: 'Mayot - PUFF (Губка Боб remix)', src:`/alisa/2.mp3`},
     {name:'Spice Girls - Wannabe', src:'/alisa/3.mp3'},
-    {name:'Wham_-_Last_Christmas_(SkySound.cc)', src:'/alisa/4.mp3'}
+    {name:'Wham_-_Last_Christmas_(SkySound.cc)', src:'/alisa/4.mp3'},
+    {name:'Финес и Ферб   Инопланетное сердце HD', src:'/alisa/5.mp3'},
+    {name: 'Челси - Не нужны советы', src:'/alisa/6.mp3'},
+    {name: 'чики чики лу', src:'/alisa/7.mp3'}
   ]
 
   const [currentMusic, setCurrentMusic] = useState<object | null>(null)
@@ -82,6 +85,15 @@ export default function Home() {
     alisaAudioRef.current = null     // очищаем ссылку
     
     audioRef.current?.play()         // возвращаем фон
+  }
+  const playAlisa = () => {
+    if (!currentMusic) return
+  
+    alisaAudioRef.current?.play()
+  }
+
+  const pauseAlisa = () => {
+    alisaAudioRef.current?.pause()
   }
   const nextAlisaMusic = () => {
     if (!currentMusic) return
@@ -151,9 +163,9 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen overflow-auto bg-black">
-    {/* {!isStart && ( <div className="absolute top-0 left-0 z-4 w-screen h-screen bg-gray-200 flex justify-center items-center"> 
+    {!isStart && ( <div className="absolute top-0 left-0 z-4 w-screen h-screen bg-gray-200 flex justify-center items-center"> 
       <button className="w-32 h-32 bg-yellow-500 rounded text-white" onClick={start}>ВХОД </button> 
-    </div> )} */}
+    </div> )}
   {/* Сцена фиксированного размера */}
   <div className="relative mx-auto" style={{ width: 1500, height: 840 }}>
     <img
@@ -215,9 +227,27 @@ export default function Home() {
             }}
             className="absolute top-[415px] cursor-pointer left-[680px] z-10 px-4 py-2 w-24 h-24 bg-transparent text-black rounded"
           >
-            
+ 
           </button>
-          <div className="absolute top-24 left-24 z-10 text-xl font-bold px-4 py-2 bg-black/50 text-white rounded">
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              playAlisa()
+            }}
+            className="absolute top-[415px] cursor-pointer left-[478px] z-10  w-[100px] h-[100px] bg-transparent text-black rounded"
+          >
+           
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              pauseAlisa()
+            }}
+            className="absolute top-[390px] cursor-pointer left-[320px] z-10  w-[140px] h-[140px] bg-transparent text-black rounded"
+          >
+            <img src="/alisa/pause.png" className='w-full' alt="" />
+          </button>
+          <div className="absolute top-24 left-24 z-10 text-[4em] font-bold px-4 py-2 bg-black/50 text-white rounded">
             {(currentMusic as any)?.name}
           </div>
         </div>

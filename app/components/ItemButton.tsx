@@ -10,12 +10,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
     return (
         <button
-            className={`absolute w-12 h-12 bg-white cursor-pointer ${className}`}
+            className={`absolute w-12 h-12 bg-transparent cursor-pointer ${className}`}
             onClick={clickHandler}
             {...rest}
         
         >
-            {children}
+            
         </button>
     
     )
