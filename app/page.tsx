@@ -7,16 +7,29 @@ import ItemButton from './components/ItemButton'
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const dogAudioRef = useRef<HTMLAudioElement>(null)
+  const alisaAudioRef = useRef<HTMLAudioElement>(null)
 
 
   const [isStart, setIsStart] = useState(false)
 
   const [monikActive, setMonikActive] = useState(false)
   const [dogActive, setDogActive] = useState(false)
+  const [alisaActive, setAlisaActive] = useState(false)
+  
 
   const computerVideos = [
   'https://www.youtube.com/embed/6G6A3NKrSK8?si=AONrwPWdwpZbxVMV',
-  'https://www.youtube.com/embed/OIuIO-X3TkY?si=Ppy3CugvBiop64PJ']
+  'https://www.youtube.com/embed/OIuIO-X3TkY?si=Ppy3CugvBiop64PJ'
+]
+  const alisaMusicList = [
+    {name:'Gonja - Плющит', src:`/alisa/1.mp3`},
+    {name: 'Mayot - PUFF (Губка Боб remix)', src:`/alisa/2.mp3`},
+    {name:'Spice Girls - Wannabe', src:'/alisa/3.mp3'},
+    {name:'Wham_-_Last_Christmas_(SkySound.cc)', src:'/alisa/4.mp3'}
+  ]
+
+  const [currentMusic, setCurrentMusic] = useState<object | null>(null)
+
 
 
   const start = () => {
@@ -48,6 +61,47 @@ export default function Home() {
     dogAudioRef.current?.pause()
     audioRef.current?.play()
   }
+
+  const startAlisa = () => {
+    audioRef.current?.pause()
+    setAlisaActive(true)
+    setCurrentMusic(alisaMusicList[0])
+    console.log(alisaMusicList[0]);
+    
+    // Создаём новый аудио и сохраняем
+    const audio = new Audio(`${(alisaMusicList[0] as any).src}`)
+    alisaAudioRef.current = audio
+    audio.play()
+  }
+
+  const stopAlisa = () => {
+    setAlisaActive(false)
+    setCurrentMusic(null)
+    
+    alisaAudioRef.current?.pause()   // останавливаем текущий аудио
+    alisaAudioRef.current = null     // очищаем ссылку
+    
+    audioRef.current?.play()         // возвращаем фон
+  }
+  const nextAlisaMusic = () => {
+    if (!currentMusic) return
+  
+    const currentIndex = alisaMusicList.findIndex(
+      music => music.src === (currentMusic as any).src
+    )
+    const nextIndex = (currentIndex + 1) % alisaMusicList.length
+    const nextMusic = alisaMusicList[nextIndex]
+    
+    setCurrentMusic(nextMusic)
+  
+    // Останавливаем старый аудио
+    alisaAudioRef.current?.pause()
+    
+    // Создаём новый
+    const audio = new Audio((nextMusic as any).src)
+    alisaAudioRef.current = audio
+    audio.play()
+  }
   
   // Попап Кришны
   const startKrish = () => {
@@ -73,6 +127,18 @@ export default function Home() {
       audioRef.current?.play()
     }, 6000)
   }
+
+  const startAlihan = () => {
+    audioRef.current?.pause()
+    const random = Math.floor(Math.random() * 4) + 1
+    const audio = new Audio(`/alihan/${random}.mp3`)
+    audio.play()
+    setTimeout(() => {
+      audio.pause()
+      audioRef.current?.play()
+    }, 6000)
+  }
+  
 
   const stopAll = () => {
     setDogActive(false)
@@ -101,7 +167,7 @@ export default function Home() {
       <ItemButton clickHandler={startDog} 
         style={{ top: 330, left: 670 }}>DOG</ItemButton>
 
-      <ItemButton clickHandler={startDog} 
+      <ItemButton clickHandler={startAlisa} 
         style={{ top: 375, left: 505 }}>ALISA</ItemButton>
 
       <ItemButton clickHandler={startComp} 
@@ -112,6 +178,9 @@ export default function Home() {
 
 <ItemButton clickHandler={startLena} 
         style={{ top: 440, right: 350 }} className='w-24 h-26'>Lena</ItemButton>
+
+<ItemButton clickHandler={startAlihan} 
+        style={{ top: 420, right: 130 }} className='w-26 h-26'>sH</ItemButton>
     </div>
   </div>
 
@@ -124,6 +193,36 @@ export default function Home() {
       <div className="h-[600px] w-full">
         <img
           src="/buttons/dog.png"
+          className="h-full w-full object-contain"
+          alt=""
+        />
+      </div>
+    </div>
+  )}
+
+
+{alisaActive && (
+    <div
+      onClick={stopAlisa}
+      className="absolute top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-black/75"
+    >
+      <div className="h-[600px] w-full relative">
+        <div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              nextAlisaMusic()
+            }}
+            className="absolute top-[415px] cursor-pointer left-[680px] z-10 px-4 py-2 w-24 h-24 bg-transparent text-black rounded"
+          >
+            
+          </button>
+          <div className="absolute top-24 left-24 z-10 text-xl font-bold px-4 py-2 bg-black/50 text-white rounded">
+            {(currentMusic as any)?.name}
+          </div>
+        </div>
+        <img
+          src="/alisa/1.png"
           className="h-full w-full object-contain"
           alt=""
         />
