@@ -1,8 +1,10 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import DayField from "./components/DayField"
 import NightField from "./components/NightField"
+import { bgManager } from "@/lib/bgManager"
+import { speechManager } from "@/lib/speechManager"
 
 export default function Home() {
   const [selected, setSelected] = useState<'day' | 'night' | null>('night')
@@ -38,7 +40,7 @@ export default function Home() {
       {name: 'Челси - Не нужны советы', src:'/alisa/6.mp3'},
       {name: 'чики чики лу', src:'/alisa/7.mp3'}
     ]
-
+    let currentSpeechId = 0
   const start = () => {
     setIsStart(true)
    startBg()
@@ -57,41 +59,40 @@ export default function Home() {
   }
   // Попап Кришны
   const startKrish = () => {
-    setActiveSpeaker('krish')
-    stopBg()
+    setActiveSpeaker("krish")
+    bgManager.stop()
+  
     const random = Math.floor(Math.random() * 4) + 1
-    const audio = new Audio(`/krish/${random}.mp3`)
-    audio.play()
-    audio.onended = () => {
-        startBg()
-        setActiveSpeaker(null)
-      }
+    speechManager.play(`/krish/${random}.mp3`, () => {
+      setActiveSpeaker(null)
+      bgManager.play()
+    })
   }
+  
   
 
   // Попап Лены
-  const startLena= () => {
-    setActiveSpeaker('lena')
-    stopBg()
+  const startLena = () => {
+    setActiveSpeaker("lena")
+    bgManager.stop()
+  
     const random = Math.floor(Math.random() * 5) + 1
-    const audio = new Audio(`/lena/${random}.mp3`)
-    audio.play()
-    audio.onended = () => {
-        startBg()
-        setActiveSpeaker(null)
-      }
+    speechManager.play(`/lena/${random}.mp3`, () => {
+      setActiveSpeaker(null)
+      bgManager.play()
+    })
   }
+  
 
   const startAlihan = () => {
-    setActiveSpeaker('alihan')
-   stopBg()
+    setActiveSpeaker("alihan")
+    bgManager.stop()
+  
     const random = Math.floor(Math.random() * 2) + 1
-    const audio = new Audio(`/alihan/${random}.mp3`)
-    audio.play()
-    audio.onended = () => {
-        startBg()
-        setActiveSpeaker(null)
-      }
+    speechManager.play(`/alihan/${random}.mp3`, () => {
+      setActiveSpeaker(null)
+      bgManager.play()
+    })
   }
   // Попап монитора
   const startComp = () => {
@@ -231,7 +232,11 @@ export default function Home() {
     setActiveTable(false)
   }
    
-
+  useEffect(() => {
+    if (audioRef.current) {
+      bgManager.init(audioRef.current)
+    }
+  }, [])
   
   return (
     <div>
