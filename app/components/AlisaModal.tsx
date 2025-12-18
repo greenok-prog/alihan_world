@@ -49,7 +49,7 @@ const AlisaModal:FC<Props> = ({start, stop, next, pause, play, current}) => {
             </div>
           </div>
           <img
-            src="/alisa/1.png"
+            src="/alisa/1.webp"
             className="h-full w-full object-contain"
             alt=""
           />

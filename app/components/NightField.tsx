@@ -139,7 +139,7 @@ export default function NightField({selectDay, actions}: Props) {
 
   {/* Попап собаки */}
   {actions.dog.state && (
-   <ImgModal imgSrc='/buttons/dog.png' closeModal={actions.dog.stop}/>
+   <ImgModal imgSrc='/buttons/dog.webp' closeModal={actions.dog.stop}/>
   )}
 
 {actions.guestRoom.state && (
