@@ -13,17 +13,17 @@ interface ButtonProps extends ButtonHTMLAttributes<any> {
     return (
         <div>
             {link ? (
-            <Link href={link} target="_blank"  className={`absolute w-12 h-12 bg-transparent cursor-pointer ${className}`} {...rest} rel="noopener noreferrer">
-                {/* {children} */}
+            <Link href={link} target="_blank"  className={`absolute w-12 h-12 bg-white cursor-pointer ${className}`} {...rest} rel="noopener noreferrer">
+                {children}
             </Link>
         ) : (
             <button
-            className={`absolute w-12 h-12 bg-transparent cursor-pointer ${className}`}
+            className={`absolute w-12 h-12 bg-white cursor-pointer ${className}`}
             onClick={clickHandler}
             {...rest}
         
         >
-            {/* {children} */}
+            {children}
         </button>
         )}
         </div>
