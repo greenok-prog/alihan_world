@@ -17,7 +17,7 @@ export default function DayField({selectNight, startBg, stopBg}: {selectNight: (
   const [alisaActive, setAlisaActive] = useState(false)
   const [balkonActive, setBalkonActive] = useState(false)
   const [activeSpeaker, setActiveSpeaker] = useState<null | string>(null)
-  const [activeBalkonImage, setActiveBalkonImage] = useState("/balkon/1.png")
+  const [activeBalkonImage, setActiveBalkonImage] = useState("/balkon/1.webp")
   
 
   const computerVideos = [
@@ -165,7 +165,7 @@ export default function DayField({selectNight, startBg, stopBg}: {selectNight: (
   }
 
   const startBalkon = () => {
-    setActiveBalkonImage(`/balkon/${Math.floor(Math.random()*6)+1}.png`)
+    setActiveBalkonImage(`/balkon/${Math.floor(Math.random()*6)+1}.webp`)
     setBalkonActive(true)
     stopBg()
      const audio = new Audio(`/dota.mp3`)
