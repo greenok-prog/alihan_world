@@ -6,6 +6,7 @@ import ItemButton from '../components/ItemButton'
 import Link from 'next/link'
 import ImgModal from './ImgModal'
 import AlisaModal from './AlisaModal'
+import Coockie from './Cookie'
 type Props = {
     actions:{
         startKrish: () => void,
@@ -70,15 +71,12 @@ type Props = {
 }
 export default function NightField({selectDay, actions}: Props) {
   
-
-
- 
-
   return (
     <div className="w-screen h-screen overflow-auto bg-black">
    
   {/* Сцена фиксированного размера */}
   <div className="relative mx-auto" style={{ width: 1500, height: 840 }}>
+  <Coockie />
   <button  onClick={selectDay} className='absolute left-8 w-24 h-24 top-8 z-2'>
     <img src="/sun.png"  alt="Night Mode" className='w-full h-full' />
   </button>
@@ -176,7 +174,7 @@ export default function NightField({selectDay, actions}: Props) {
       </div>
     </div>
   )}
-
+  
 
 </div>
 

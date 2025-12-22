@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import ItemButton from '../components/ItemButton'
 import ImgModal from './ImgModal'
 import AlisaModal from './AlisaModal'
+import Coockie from './Cookie'
 type Props = {
     actions:{
         startKrish: () => void,
@@ -82,6 +83,7 @@ export default function DayField({selectNight, actions}: Props) {
     </div> )} */}
   {/* Сцена фиксированного размера */}
   <div className="relative mx-auto" style={{ width: 1500, height: 840 }}>
+  <Coockie/>
   <button  onClick={selectNight} className='absolute left-8 w-24 h-24 top-8 z-2'>
     <img src="/moon.png"  alt="Night Mode" className='w-full h-full' />
     
@@ -196,7 +198,7 @@ export default function DayField({selectNight, actions}: Props) {
       </div>
     </div>
   )}
-
+  
   {/* Аудио */}
   <audio ref={audioRef} src="/background.mpeg" loop />
   

@@ -1,23 +1,28 @@
 import { FC } from "react";
 
 type Props = {
-    imgSrc: string,
-    closeModal: () => void
-}
-const ImgModal:FC<Props>= ({imgSrc, closeModal}) => {
-    return (
-        <div
+  imgSrc: string;
+  closeModal: () => void;
+};
+
+const ImgModal: FC<Props> = ({ imgSrc, closeModal }) => {
+  return (
+    <div
       onClick={closeModal}
-      className="absolute top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-black/75"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4"
     >
-      <div className="h-[600px] w-full">
+      <div
+        className="max-h-[90vh] max-w-[90vw]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <img
           src={imgSrc}
-          className="h-full w-full object-contain"
           alt=""
+          className="h-auto w-auto max-h-[90vh] max-w-[90vw] object-contain"
         />
       </div>
     </div>
-    )
-}
+  );
+};
+
 export default ImgModal;
