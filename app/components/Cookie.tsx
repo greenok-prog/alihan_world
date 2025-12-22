@@ -17,40 +17,47 @@ const Coockie = ({style}:{style?:CSSProperties}) => {
 
     
     const openCookie = () => {
-    setStatus(true);
-    
-    // если день НЕ прошёл — просто показываем сохранённую
-    if (!isDayPassed()) {
-        const savedToday = localStorage.getItem('todayCookie');
-        if (savedToday) {
-        setSelected(Number(savedToday));
+        setStatus(true);
+      
+        // если день НЕ прошёл — показываем сохранённую
+        if (!isDayPassed()) {
+          const savedToday = localStorage.getItem('todayCookie');
+          if (savedToday) {
+            setSelected(Number(savedToday));
+            setOpened(true);
+            return;
+          }
+        }
+      
+        const MAX = 15;
+        const selectedCookies = JSON.parse(
+          localStorage.getItem('selectedCookie') || '[]'
+        ) as number[];
+      
+        const available = Array.from({ length: MAX }, (_, i) => i + 1)
+          .filter(n => !selectedCookies.includes(n));
+      
+        // если всё использовано — начинаем заново
+        const pool = available.length
+          ? available
+          : Array.from({ length: MAX }, (_, i) => i + 1);
+      
+        const random = pool[Math.floor(Math.random() * pool.length)];
+      
+        setSelected(random);
         setOpened(true);
-        return;
-        }
-    }
-    
-    // если день прошёл — выбираем новую
-    const selectedCookies = JSON.parse(
-        localStorage.getItem('selectedCookie') || '[]'
-    );
-    
-    let random = Math.floor(Math.random() * 15) + 1;
-    if (selectedCookies.length) {
-        while (selectedCookies.includes(random)) {
-        random = Math.floor(Math.random() * 15) + 1;
-        }
-    }
-    
-    setSelected(random);
-    setOpened(true);
-    
-    localStorage.setItem('todayCookie', random.toString());
-    localStorage.setItem('lastSelectedDate', Date.now().toString());
-    localStorage.setItem(
-        'selectedCookie',
-        JSON.stringify([...selectedCookies, random])
-    );
-    };
+      
+        localStorage.setItem('todayCookie', random.toString());
+        localStorage.setItem('lastSelectedDate', Date.now().toString());
+      
+        // если был сброс — начинаем новый список
+        const newSelected = available.length
+          ? [...selectedCookies, random]
+          : [random];
+      
+        localStorage.setItem('selectedCookie', JSON.stringify(newSelected));
+      };
+      
       
 
     
