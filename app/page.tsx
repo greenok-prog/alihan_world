@@ -240,9 +240,9 @@ export default function Home() {
   
   return (
     <div>
-       {/* {!isStart && ( <div className="absolute top-0 left-0 z-4 w-screen h-screen bg-gray-200 flex justify-center items-center"> 
+       {!isStart && ( <div className="absolute top-0 left-0 z-4 w-screen h-screen bg-gray-200 flex justify-center items-center"> 
           <button className="w-32 h-32 bg-yellow-500 rounded text-white" onClick={start}>ВХОД </button> 
-        </div> )} */}
+        </div> )}
       {selected === 'day' ? 
       <DayField actions={{
         comp:{
